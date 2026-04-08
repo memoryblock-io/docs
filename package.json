@@ -1,0 +1,14 @@
+{
+  "name": "docmd.io",
+  "version": "0.0.0",
+  "description": "Documentation for Memoryblock, a lightweight system for running isolated AI workspaces locally with persistent memory, multi-agent orchestration, and optimised token usage.",
+  "private": true,
+  "scripts": {
+    "dev": "docmd dev",
+    "build": "docmd build",
+    "preview": "npx serve site"
+  },
+  "dependencies": {
+    "@docmd/core": "^0.6.7"
+  }
+}
