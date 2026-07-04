@@ -96,6 +96,7 @@ module.exports = defineConfig({
           title: 'Community',
           links: [
             { text: 'GitHub', url: 'https://github.com/memoryblock-io/memoryblock', external: true },
+            { text: 'Releases', url: 'https://github.com/memoryblock-io/memoryblock/releases', external: true },
             { text: 'Discussions', url: 'https://github.com/orgs/memoryblock-io/discussions', external: true },
             { text: 'NPM Registry', url: 'https://www.npmjs.com/package/memoryblock', external: true }
           ]
@@ -212,7 +213,6 @@ module.exports = defineConfig({
         { title: 'Testing Guide', path: '/development/testing-guide', icon: 'test-tube' },
         { title: 'Contributing', path: '/development/contributing', icon: 'git-pull-request' },
         { title: 'Issue reporting', path: '/development/issue-reporting', icon: 'alert-circle' },
-        { title: 'Release notes', path: '/development/release-notes', icon: 'tag' },
       ],
     },
     {
@@ -222,6 +222,7 @@ module.exports = defineConfig({
       children: [
         { title: 'GitHub', path: 'https://github.com/memoryblock-io/memoryblock', icon: 'github', external: true },
         { title: 'Issues', path: 'https://github.com/memoryblock-io/memoryblock/issues', icon: 'alert-circle', external: true },
+        { title: 'Releases', path: 'https://github.com/memoryblock-io/memoryblock/releases', icon: 'tag', external: true },
         { title: 'Discussions', path: 'https://github.com/orgs/memoryblock-io/discussions', icon: 'message-square', external: true },
       ]
     }
