@@ -106,7 +106,7 @@ customScripts: |
 <footer class="site-footer">
   <span>&copy; 2026 memoryblock.io</span>
   <span class="dot" aria-hidden="true">&middot;</span>
-  <a href="https://docs.memoryblock.io" target="_blank" rel="noopener">Documentation</a>
+  <a href="/docs" target="_blank" rel="noopener">Documentation</a>
   <span class="dot" aria-hidden="true">&middot;</span>
   <a href="https://www.npmjs.com/package/memoryblock" target="_blank" rel="noopener">npm</a>
   <span class="dot" aria-hidden="true">&middot;</span>

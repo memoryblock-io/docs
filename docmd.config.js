@@ -79,7 +79,7 @@ module.exports = defineConfig({
         {
           title: 'Resources',
           links: [
-            { text: 'Getting Started', url: '/' },
+            { text: 'Getting Started', url: '/getting-started' },
             { text: 'Architecture', url: '/architecture' },
             { text: 'CLI Commands', url: '/commands' }
           ]
@@ -88,8 +88,8 @@ module.exports = defineConfig({
           title: 'Ecosystem',
           links: [
             { text: 'aiplug', url: '/aiplug' },
-            { text: 'Plugins', url: '/plugins/web-search' },
-            { text: 'Development', url: '/development/development' }
+            { text: 'Plugins', url: '/plugins/installer' },
+            { text: 'Development', url: '/development/environment' }
           ]
         },
         {
@@ -140,6 +140,7 @@ module.exports = defineConfig({
       icon: 'zap',
       collapsible: false,
       children: [
+        { title: 'Getting started', path: '/getting-started', icon: 'rocket' },
         { title: 'Architecture', path: '/architecture', icon: 'component' },
         { title: 'Configuration', path: '/configuration', icon: 'settings' },
         { title: 'CLI Commands', path: '/commands', icon: 'terminal' },
@@ -152,8 +153,6 @@ module.exports = defineConfig({
       icon: 'wrench',
       collapsible: false,
       children: [
-        { title: 'Getting started', path: '/getting-started', icon: 'rocket' },
-        { title: 'Reference', path: '/tools-reference', icon: 'book' },
         { title: 'Pulse System', path: '/tools/pulse', icon: 'activity' },
         { title: 'File System', path: '/tools/fs', icon: 'file' },
         { title: 'Shell & Commands', path: '/tools/shell', icon: 'terminal' },
@@ -201,7 +200,8 @@ module.exports = defineConfig({
       children: [
         { title: 'API Reference', path: '/api-reference', icon: 'braces' },
       ],
-    },
+    },  { title: 'Tools Reference', path: '/tools-reference', icon: 'wrench' },
+      
 
     // ── Develop (contributor-only) ────────────────────────────────────
     {
