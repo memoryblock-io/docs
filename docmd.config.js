@@ -132,8 +132,6 @@ module.exports = defineConfig({
   // group at the bottom is for contributors and maintainers only: build
   // setup, plugin authoring, testing, contributing, issue reporting, release notes.
   navigation: [
-    { title: 'Home', path: '/', icon: 'home' },
-
     // ── Use memoryblock (user-facing) ──────────────────────────────────
     {
       title: 'Get Started',
