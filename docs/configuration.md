@@ -44,26 +44,26 @@ Every block has a `config.json` that controls its behavior. Here's a complete re
         "model": "us.anthropic.claude-sonnet-4-5-20250929-v1:0",
         "region": "us-east-1",
         "maxTokens": 4096,
-        "cacheControl": false
+        "cacheControl": false,
+        "baseURL": null
     }
 }
 ```
 
 | Field | Default | Description |
 |-------|---------|-------------|
-| `provider` | `"bedrock"` | LLM provider: `bedrock`, `openai`, `anthropic`, `gemini`, or `ollama`. |
-| `model` | Sonnet 3.5 | Model ID. Varies by provider. |
-| `region` | `"us-east-1"` | AWS region for Bedrock. |
+| `provider` | `"bedrock"` | aiplug provider slug. See the [provider registry](/aiplug/registry) for the full list (100+ providers). |
+| `model` | Sonnet 4.5 | Model ID. Varies by provider. |
+| `region` | `"us-east-1"` | AWS region for Bedrock-family providers. |
 | `maxTokens` | `4096` | Maximum output tokens per response. |
-| `cacheControl` | `false` | Anthropic prompt caching. |
+| `cacheControl` | `false` | Anthropic / Bedrock prompt caching. |
+| `baseURL` | `null` | Optional API endpoint override. Used by Ollama (`http://localhost:11434/v1`) and any OpenAI-compatible endpoint swap. |
 
-### Supported Providers
+### Where the provider list comes from
 
-- **AWS Bedrock**: Claude 3.5 Sonnet, Claude 3 Haiku, Llama 3.
-- **OpenAI**: GPT-4o, GPT-4o-mini, o1.
-- **Anthropic**: Claude 3.5 Sonnet, Claude 3 Opus.
-- **Google Gemini**: Gemini 1.5 Pro/Flash, Gemini 2.0.
-- **Ollama**: Run any model locally (Llama 3, Mistral, Qwen, etc). No API key required.
+memoryblock no longer ships per-provider adapter code. The provider list comes from the bundled [aiplug](/aiplug) runtime — every provider in the world (OpenAI, Anthropic, Bedrock, Gemini, Ollama, MiniMax, DeepSeek, Moonshot, GLM, Zhipu, Together, Groq, vLLM, llama.cpp server, …) is sourced from aiplug's registry. Adding a new provider is an aiplug change, not a memoryblock change.
+
+The [provider registry](/aiplug/registry) page has the full list and the discovery workflow.
 
 
 | Model | ID | Input/Output (per 1M tokens) |
@@ -72,6 +72,54 @@ Every block has a `config.json` that controls its behavior. Here's a complete re
 | Claude Sonnet 4.5 | `us.anthropic.claude-sonnet-4-5-20250929-v1:0` | $3/$15 |
 | Claude Sonnet 4 | `us.anthropic.claude-sonnet-4-20250514-v1:0` | $3/$15 |
 | Claude Haiku 3.5 | `us.anthropic.claude-3-5-haiku-20241022-v1:0` | $0.80/$4 |
+
+## `auth.json` — Provider Credentials
+
+The `auth.json` file in your workspace holds credentials keyed by provider. Each provider section is optional — only the ones you use need to be filled in.
+
+```json
+{
+  "providers": {
+    "bedrock":   { "apiKey": "AKIA:secret", "region": "us-east-1" },
+    "openai":    { "apiKey": "sk-proj-..." },
+    "anthropic": { "apiKey": "sk-ant-..." },
+    "minimax":   { "apiKey": "..." }
+  },
+  "telegram":  { "botToken": "8445465...", "chatId": "5315436002" },
+  "brave":     { "apiKey": "BSA..." }
+}
+```
+
+The new `providers` object is the canonical place. Each key is an aiplug provider slug; each value is whatever credentials that provider needs (the schema is discovered from `AIPlug.configSchema(slug)` at runtime). The legacy flat fields — `aws`, `openai`, `google`, `anthropic`, `gemini`, `ollama` — are still honoured and merged into the new shape by `loadAuth()`, so existing auth.json files keep working without migration.
+
+| Field | Auth fields | Environment variable fallback |
+|:---|:---|:---|
+| `providers.<slug>` | per-provider (auto-discovered) | `<SLUG>_<FIELD>` env (e.g. `MINIMAX_API_KEY`) |
+| `aws` *(legacy)* | `accessKeyId`, `secretAccessKey`, `region` | `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_REGION` |
+| `openai` *(legacy)* | `apiKey` | `OPENAI_API_KEY` |
+| `google` *(legacy)* | `apiKey` | `GOOGLE_API_KEY` (preferred), `GEMINI_API_KEY` (legacy) |
+| `anthropic` *(legacy)* | `apiKey` | `ANTHROPIC_API_KEY` |
+| `telegram` | `botToken`, `chatId` | — |
+| `brave` | `apiKey` | — |
+| `brave` | `apiKey` | — |
+
+> **Legacy `gemini` key.** Blocks written before the rename to `google` will still find their API key under the old `gemini` key — it's auto-mirrored at load time. New code should use `google`.
+
+## Ollama Setup State
+
+When you pick Ollama during `mblk init`, memoryblock records install + model state at `~/.memoryblock/ws/ollama.json`:
+
+```json
+{
+  "installed": true,
+  "daemonManaged": true,
+  "defaultModel": "qwen2.5:0.5b",
+  "installedAt": "2026-06-12T19:50:00.000Z",
+  "lastChecked": "2026-06-12T20:05:23.142Z"
+}
+```
+
+Re-running `mblk init` is silent once this file is present. Delete it to re-trigger the install/serve/pull prompts.
 
 ## Tools Configuration
 

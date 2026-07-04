@@ -41,6 +41,7 @@ The server provides the web dashboard and REST API.
 | `mblk server start` | Start the web UI + API server (foreground). |
 | `mblk server start -d` | Start as a background process. |
 | `mblk server start -p 3000` | Start on a custom port (default: 8420). |
+| `mblk server start --host 127.0.0.1` | Bind interface (default `127.0.0.1`; pass `0.0.0.0` for LAN). |
 | `mblk server stop` | Stop the running server. |
 | `mblk server status` | Show if the server is running, its PID and port. |
 | `mblk server token` | View the current API token. |
@@ -58,6 +59,21 @@ The server provides the web dashboard and REST API.
 | `mblk add <plugin>` | Install a plugin. |
 | `mblk remove <plugin>` | Remove an installed plugin. Core plugins cannot be removed. |
 | `mblk settings [plugin]` | View or edit plugin settings (interactive). |
+
+## Providers (LLM credentials)
+
+| Command | Description |
+| :--- | :--- |
+| `mblk providers` | Show the current auth state across all configured providers. |
+| `mblk providers <slug>` | View or update credentials for one provider. |
+| `mblk providers <slug> -y` | Non-interactive mode (only show current state, do not prompt). |
+
+memoryblock does not ship per-provider adapter code. The provider list comes from the bundled [aiplug registry](/aiplug/registry); adding a new provider is an aiplug change, not a memoryblock change.
+
+## See also
+
+- [Aiplug CLI reference](/aiplug/cli) — the `aiplug` command itself, for direct provider configuration and the OpenAI-compatible HTTP server.
+- [Configuration](configuration.md) — where the credentials and block config actually live on disk.
 
 ## Security & Permissions
 

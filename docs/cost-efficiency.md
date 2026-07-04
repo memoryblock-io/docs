@@ -66,10 +66,26 @@ If a session crashes or the user stops and restarts, Memoryblock doesn't start f
 Every API call is tracked with per-turn granularity:
 
 ```
-3,572in/161out = $0.0035
+turn: 3,572 in / 161 out  ·  session: 12.4k in / 4.1k out  ·  total: 87.3k in / 28.9k out
 ```
 
-This works identically across all adapters (Bedrock, OpenAI, Gemini, Anthropic). The cost display format never changes when you switch providers — only the pricing table updates internally.
+The monitor maintains three running counters:
+
+| Counter | Source | Persisted? |
+| --- | --- | --- |
+| **turn** (this message) | `response.usage` from the latest adapter call | No — derived per response |
+| **session** (this block, this run) | Running sum since the monitor started | No — reset on restart |
+| **total** (all-time per block) | Cumulative across all sessions | Yes — `costs.json` |
+
+Token usage is read from the `usage` chunk that every transport emits on stream completion. Because OpenAI and the OpenAI-compatible family (DeepSeek, Moonshot, MiniMax, Together, Groq, llama.cpp server, …) only surface usage when the request body sets `stream_options: { include_usage: true }`, the bundled aiplug transport sets that flag by default. You should see real numbers from turn one; if you ever see `0 in / 0 out`, the provider is one of the few that doesn't honour the flag and you can pass a custom `providerOptions.stream_options` to fix it.
+
+Display surface:
+
+- **CLI** — a styled `· turn / session / total ·` badge below each assistant message, plus the same data surfaced in the prompt footer between turns.
+- **Web dashboard** — a persistent cost bar at the top of the chat view (turn / session / total) and a per-message cost footer mirroring the CLI.
+- **Telegram** — included as the message footer.
+
+This works identically across every provider because the data is read from aiplug's normalised `usage` chunk, never from provider-specific headers.
 
 ## Real-World Impact
 

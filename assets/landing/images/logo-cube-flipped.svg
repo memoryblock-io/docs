@@ -1,0 +1,25 @@
+<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="ai-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%">
+        <animate attributeName="stop-color" values="#ffb6ff; #b344ff; #ff4a5a; #4285f4; #ffb6ff" dur="8s" repeatCount="indefinite" />
+      </stop>
+      <stop offset="100%">
+        <animate attributeName="stop-color" values="#4285f4; #ffb6ff; #b344ff; #ff4a5a; #4285f4" dur="8s" repeatCount="indefinite" />
+      </stop>
+    </linearGradient>
+  </defs>
+  <!-- Main hexagon outline -->
+  <path d="M20 5L33.8564 13V27L20 35L6.14359 27V13L20 5Z" 
+        stroke="url(#ai-gradient)" 
+        stroke-width="3" 
+        stroke-linecap="round" 
+        stroke-linejoin="round" />
+  <!-- Inner "cube shadow" Y shape -->
+  <path d="M20 20V5M20 20L33.8564 27M20 20L6.14359 27" 
+        stroke="url(#ai-gradient)" 
+        stroke-width="2" 
+        stroke-linecap="round" 
+        stroke-linejoin="round" 
+        stroke-opacity="0.4" />
+</svg>

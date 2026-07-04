@@ -1,0 +1,18 @@
+<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="ai-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%">
+        <animate attributeName="stop-color" values="#ffb6ff; #b344ff; #ff4a5a; #4285f4; #ffb6ff" dur="8s" repeatCount="indefinite" />
+      </stop>
+      <stop offset="100%">
+        <animate attributeName="stop-color" values="#4285f4; #ffb6ff; #b344ff; #ff4a5a; #4285f4" dur="8s" repeatCount="indefinite" />
+      </stop>
+    </linearGradient>
+  </defs>
+  <!-- Balanced width ultra-smooth rounded hexagon outline -->
+  <path d="M20 3.5C21 3.5 22 3.8 23 4.3L32.5 10C33.5 10.5 35 11.5 35 13V27C35 28.5 33.5 29.5 32.5 30L23 35.7C22 36.2 21 36.5 20 36.5C19 36.5 18 36.2 17 35.7L7.5 30C6.5 29.5 5 28.5 5 27V13C5 11.5 6.5 10.5 7.5 10L17 4.3C18 3.8 19 3.5 20 3.5Z" 
+        stroke="url(#ai-gradient)" 
+        stroke-width="3" 
+        stroke-linecap="round" 
+        stroke-linejoin="round" />
+</svg>
