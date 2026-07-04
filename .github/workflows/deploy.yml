@@ -21,6 +21,11 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    # Expose the upload step output to the deploy job. Step outputs
+    # only exist within the same job; passing them across needs the
+    # job-level outputs field below.
+    outputs:
+      artifact_id: ${{ steps.upload.outputs.artifact_id }}
     steps:
       - name: Checkout
         uses: actions/checkout@v7
@@ -38,6 +43,7 @@ jobs:
         run: npm run build
 
       - name: Upload artifact
+        id: upload
         uses: actions/upload-pages-artifact@v5
         with:
           path: ./site
@@ -52,7 +58,7 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         env:
-          ARTIFACT_ID: ${{ steps.upload.outputs.artifact_id }}
+          ARTIFACT_ID: ${{ needs.build.outputs.artifact_id }}
           REPOSITORY: ${{ github.repository }}
           MAX_ATTEMPTS: 3
           RETRY_WAIT_SECONDS: 30
